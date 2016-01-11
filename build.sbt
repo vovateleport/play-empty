@@ -17,7 +17,11 @@ lazy val play = (project in file("play"))
     routesGenerator := InjectedRoutesGenerator,// Play provides two styles of routers, one expects its actions to be injected, the other, legacy style, accesses its actions statically.
     scalaJSProjects := jsProjects,
     pipelineStages := Seq(scalaJSProd),
-    libraryDependencies ++= Seq("com.vmunier" %% "play-scalajs-scripts" % "0.3.0")
+    libraryDependencies ++= Seq(
+      "com.vmunier" %% "play-scalajs-scripts" % "0.3.0",
+      "com.lihaoyi" %% "autowire" % "0.2.5",
+      "com.lihaoyi" %% "upickle" % "0.3.6"
+    )
   )
   .aggregate(jsProjects.map(projectToRef): _*)
   .dependsOn(sharedJvm)
@@ -28,7 +32,12 @@ lazy val client = (project in file("client"))
   .settings(commonSettings:_*)
   .settings(
     persistLauncher := true,
-    persistLauncher in Test := false
+    persistLauncher in Test := false,
+    libraryDependencies ++= Seq(
+      "org.querki" %%% "jquery-facade" % "0.10",
+      "com.lihaoyi" %%% "autowire" % "0.2.5",
+      "com.lihaoyi" %%% "upickle" % "0.3.6"
+    )
   )
   .dependsOn(sharedJs)
 
