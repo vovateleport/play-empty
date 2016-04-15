@@ -1,6 +1,6 @@
 import sbt.Project.projectToRef
 
-lazy val scalaV = "2.11.7"
+lazy val scalaV = "2.11.8"
 
 lazy val commonSettings = Seq(
   name := "play",
@@ -20,7 +20,7 @@ lazy val play = (project in file("play"))
     libraryDependencies ++= Seq(
       "com.vmunier" %% "play-scalajs-scripts" % "0.3.0",
       "com.lihaoyi" %% "autowire" % "0.2.5",
-      "com.lihaoyi" %% "upickle" % "0.3.6"
+      "com.lihaoyi" %% "upickle" % "0.3.9"
     )
   )
   .aggregate(jsProjects.map(projectToRef): _*)
@@ -34,9 +34,12 @@ lazy val client = (project in file("client"))
     persistLauncher := true,
     persistLauncher in Test := false,
     libraryDependencies ++= Seq(
-      "org.querki" %%% "jquery-facade" % "0.10",
+      "org.querki" %%% "jquery-facade" % "1.0-RC3",
       "com.lihaoyi" %%% "autowire" % "0.2.5",
-      "com.lihaoyi" %%% "upickle" % "0.3.6"
+      "com.lihaoyi" %%% "upickle" % "0.3.9"
+    ),
+    jsDependencies ++= Seq(
+      "org.webjars" % "jquery" % "2.2.1" / "jquery.js" minified "jquery.min.js"
     )
   )
   .dependsOn(sharedJs)

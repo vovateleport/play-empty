@@ -20,7 +20,7 @@ trait ApiRouter extends autowire.Server[Js.Value, Reader, Writer] {
       val obj = upickle.json.read(request.body.asText.getOrElse("")).asInstanceOf[Obj].value.toMap
       val r = autowire.Core.Request(path.split('/').toSeq, obj)
       try {
-        val rv = route[Api](new ApiServer)(r).map(upickle.json.write)
+        val rv = route[Api](new ApiServer)(r).map(upickle.json.write(_))
         rv.map { t => Results.Ok(t) }
       } catch {
         case e: InvalidInput =>
